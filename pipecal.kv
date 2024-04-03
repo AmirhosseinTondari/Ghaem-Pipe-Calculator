@@ -1,0 +1,392 @@
+<trunk>
+    mat:mat
+    t:t
+    w:w
+    d:d
+    l:l
+
+    coef:coef
+    ut_t_mm:ut_t_mm
+    ut_t_inch:ut_t_inch
+    ut_w_mm:ut_w_mm
+    ut_w_inch:ut_w_inch
+    ut_d_mm:ut_d_mm
+    ut_d_inch:ut_d_inch
+    ut_l_m:ut_l_m
+    ut_l_feet:ut_l_feet
+
+    unit_type_test_pressure_bar:unit_type_test_pressure_bar
+    unit_type_test_pressure_psi:unit_type_test_pressure_psi
+    unit_type_pipe_weight_kg:unit_type_pipe_weight_kg
+    unit_type_pipe_weight_lb:unit_type_pipe_weight_lb
+    unit_type_spiral_ang_RAD:unit_type_spiral_ang_RAD
+    unit_type_spiral_ang_DEG:unit_type_spiral_ang_DEG
+    unit_type_spiral_length_m:unit_type_spiral_length_m
+    unit_type_spiral_length_feet:unit_type_spiral_length_feet
+
+    ##############Debug Section
+    debug_fs:debug_fs
+    debug_u:debug_u
+    ##############
+
+    test_pressure:test_pressure
+    pipe_weight:pipe_weight
+    spiral_length:spiral_length
+    spiral_ang:spiral_ang
+
+    height:800
+    width:600
+
+    GridLayout: # trunk
+        cols:1
+        rows:4
+        size: root.width, root.height
+
+        GridLayout: # inputs
+            cols:3
+            rows:5
+            size_hint:(1,None)
+            height:root.height*5/13
+
+            Label:
+                text:"Pipe Grade: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            Spinner:
+                id:mat
+                text:"Choose"
+                values:['st 33', 'st 37-2', 'ust 37-2', 'rst 37-2', 'st 37-3', 'st 44-2', 'st 44-3', 'st 52-3', 'st 50-2', 'st 60-2', 'st 70-2', 'A25p(L175)', 'A(L210)', 'B(L245)', 'X42(L290)RNQM', 'X46(L320)NQM', 'X52(L360)NQM', 'X56(L390)NQM', 'X60(L415)NQM', 'X65(L450)QM', 'X70(L485)QM', 'X80(L555)QM', 'X90(L625)MQ', 'X100(L690)MQ', 'X120(L830)M']
+
+
+            GridLayout:
+                cols:2
+                Label:
+                    text:"Coef:"
+                    text_size:self.size
+                    halign:'center'
+                    valign:'center'
+                FloatLayout:
+                    TextInput:
+                        id:coef
+                        pos_hint:{'center_x':0.5,'center_y':0.5}
+                        size_hint:(1,None)
+                        height:self.minimum_height
+                        multiline:False
+                        text:"0.75"
+                        input_type: "number"
+                        input_filter:'float'
+                        on_text_validate: t.focus=True
+
+
+            Label:
+                text:"Plate Thickness: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:t
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:False
+                    input_type: "number"
+                    input_filter:'float'
+                    on_text_validate: w.focus=True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:ut_t_mm
+                    text:"mm"
+                    group:"u_plate_thickness"
+                    state:"down"
+                    on_press:root.tBtn(ut_t_mm, ut_t_inch, t)
+                ToggleButton:
+                    id:ut_t_inch
+                    text:"inch"
+                    group:"u_plate_thickness"
+                    on_press:root.tBtn(ut_t_inch, ut_t_mm, t)
+
+            Label:
+                text:"Plate Width: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:w
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:False
+                    input_type: "number"
+                    input_filter:'float'
+                    on_text_validate: d.focus=True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:ut_w_mm
+                    text:"mm"
+                    group:"u_plate_width"
+                    state:"down"
+                    on_press:root.tBtn(ut_w_mm, ut_w_inch, w)
+                ToggleButton:
+                    id:ut_w_inch
+                    text:"inch"
+                    group:"u_plate_width"
+                    on_press:root.tBtn(ut_w_inch, ut_w_mm, w)
+
+            Label:
+                text:"Pipe Diameter: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:d
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:False
+                    input_type: "number"
+                    input_filter:'float'
+                    on_text_validate: l.focus=True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:ut_d_mm
+                    text:"mm"
+                    group:"u_pipe_diameter"
+                    state:"down"
+                    on_press:root.tBtn(ut_d_mm, ut_d_inch, d)
+                ToggleButton:
+                    id:ut_d_inch
+                    text:"inch"
+                    group:"u_pipe_diameter"
+                    on_press:root.tBtn(ut_d_inch, ut_d_mm, d)
+
+            Label:
+                text:"Pipe Length: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:l
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:False
+                    input_type: "number"
+                    input_filter:'float'
+                    on_text_validate: lower_ang_range.focus=True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:ut_l_m
+                    text:"m"
+                    group:"u_pipe_length"
+                    state:"down"
+                    on_press:root.tBtn(ut_l_m, ut_l_feet, l)
+                ToggleButton:
+                    id:ut_l_feet
+                    text:"feet"
+                    group:"u_pipe_length"
+                    on_press:root.tBtn(ut_l_feet, ut_l_m, l)
+
+        GridLayout:
+            cols:4
+            rows:1
+            size_hint:(1,None)
+            height:root.height/13
+
+            Label:
+                text:"Angle Range: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:lower_ang_range
+                    text:"11"
+                    pos_hint:{'center_x':0.25,'center_y':0.5}
+                    size_hint:(None,None)
+                    height:self.minimum_height
+                    width:l.width/2
+                    multiline:False
+                    input_type: "number"
+                    input_filter:'float'
+                    on_text_validate: upper_ang_range.focus=True
+                TextInput:
+                    id:upper_ang_range
+                    text:"37"
+                    pos_hint:{'center_x':0.75,'center_y':0.5}
+                    size_hint:(None,None)
+                    height:self.minimum_height
+                    width:l.width/2
+                    multiline:False
+                    input_type: "number"
+                    input_filter:'float'
+                    on_text_validate: cal.focus=True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:unit_type_ang_range_DEG
+                    text:"DEG"
+                    group:"u_ang_range"
+                    state:"down"
+                    on_press:
+                        root.tBtn(unit_type_ang_range_DEG, unit_type_ang_range_RAD, lower_ang_range)
+                        root.tBtn(unit_type_ang_range_DEG, unit_type_ang_range_RAD, upper_ang_range)
+                ToggleButton:
+                    id:unit_type_ang_range_RAD
+                    text:"RAD"
+                    group:"u_ang_range"
+                    on_press:
+                        root.tBtn(unit_type_ang_range_RAD, unit_type_ang_range_DEG, lower_ang_range)
+                        root.tBtn(unit_type_ang_range_RAD, unit_type_ang_range_DEG, upper_ang_range)
+
+        GridLayout: # outputs
+            cols:3
+            rows:5
+            size_hint:(1,None)
+            height:root.height*5/13
+
+            Label:
+                id:debug_u
+                #text:"Debug-->U="
+            Label:
+                text:"OUTPUTS:"
+                bold:True
+            Label:
+                id:debug_fs
+                #text:"font_size:"
+
+            Label:
+                text:"Test Pressure: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:test_pressure
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:False
+                    readonly:True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:unit_type_test_pressure_bar
+                    text:"bar"
+                    group:"u_test_pressure"
+                    state:"down"
+                    on_press:root.tBtn(unit_type_test_pressure_bar, unit_type_test_pressure_psi, test_pressure)
+                ToggleButton:
+                    id:unit_type_test_pressure_psi
+                    text:"psi"
+                    group:"u_test_pressure"
+                    on_press:root.tBtn(unit_type_test_pressure_psi, unit_type_test_pressure_bar, test_pressure)
+
+            Label:
+                text:"Pipe Weight: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:pipe_weight
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:False
+                    readonly:True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:unit_type_pipe_weight_kg
+                    text:"kg"
+                    group:"u_pipe_weight"
+                    state:"down"
+                    on_press:root.tBtn(unit_type_pipe_weight_kg, unit_type_pipe_weight_lb, pipe_weight)
+                ToggleButton:
+                    id:unit_type_pipe_weight_lb
+                    text:"lb"
+                    group:"u_pipe_weight"
+                    on_press:root.tBtn(unit_type_pipe_weight_lb, unit_type_pipe_weight_kg, pipe_weight)
+
+            Label:
+                text:"Spiral Length: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:spiral_length
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:False
+                    readonly:True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:unit_type_spiral_length_m
+                    text:"m"
+                    group:"u_spiral_length"
+                    state:"down"
+                    on_press:root.tBtn(unit_type_spiral_length_m, unit_type_spiral_length_feet, spiral_length)
+                ToggleButton:
+                    id:unit_type_spiral_length_feet
+                    text:"feet"
+                    group:"u_spiral_length"
+                    on_press:root.tBtn(unit_type_spiral_length_feet, unit_type_spiral_length_m, spiral_length)
+
+            Label:
+                text:"Spiral Angle: "
+                text_size:self.size
+                halign:'right'
+                valign:'center'
+            FloatLayout:
+                TextInput:
+                    id:spiral_ang
+                    pos_hint:{'center_x':0.5,'center_y':0.5}
+                    size_hint:(1,None)
+                    height:self.minimum_height
+                    multiline:True
+                    readonly:True
+            GridLayout:
+                cols:2
+                ToggleButton:
+                    id:unit_type_spiral_ang_DEG
+                    text:"DEG"
+                    group:"u_spiral_ang"
+                    state:"down"
+                    on_press:root.tBtn(unit_type_spiral_ang_DEG, unit_type_spiral_ang_RAD, spiral_ang, justNum=False)
+                ToggleButton:
+                    id:unit_type_spiral_ang_RAD
+                    text:"RAD"
+                    group:"u_spiral_ang"
+                    on_press:root.tBtn(unit_type_spiral_ang_RAD, unit_type_spiral_ang_DEG, spiral_ang, justNum=False)
+
+
+        GridLayout:
+            cols:2
+            rows:1
+            size_hint_y:None
+            height:root.height*0.15
+            Button:
+                id:cal
+                text: "Calculate"
+                on_press:
+                    root.btn()
+                    spiral_ang.background_color = root.feasCheck(spiral_ang, float(lower_ang_range.text), float(upper_ang_range.text), unit_type_spiral_ang_RAD.state, unit_type_ang_range_RAD.state)
+            Button:
+                id:copy_clipboard
+                text: "Copy Results"
+                size_hint_x:None
+                width:root.width/3
+                on_press:
+                    root.copy2Clipboard()
